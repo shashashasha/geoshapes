@@ -1,0 +1,83 @@
+html, body { height: 100%; width:960px; margin:auto; background: #FFF; font-family: Helvetica, Arial, sans-serif; }
+
+.leftSide { float:left; }
+.rightSide { float:right; }
+
+.uiBackground { background: #FFF; }
+
+.logoText { font-size: 36px; font-weight: bold; color: #5BCCDF; }
+.productText { font-size: 28px; font-weight: bold; color: #666; text-transform: uppercase; }
+
+a {
+	font-weight: bold;
+	color: #666;
+}
+
+.fillerText { 
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
+	float:left; padding-left:10px; padding-right:10px;
+	color:#999999; font-size:14px; font-weight: 300;
+}
+
+.unselectable {
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   user-select: none;
+}
+
+.ui-menu .ui-menu-item a {
+	line-height:1;
+	font-size: .8em;
+}
+
+.ui-slider {
+  font-size: 19px;
+  margin-top: 5px;
+}
+
+.ui-state-focus {
+  outline: none;
+}
+
+/* more id specific stuff */
+input[type="text"] {
+	width: 22px; padding: 3px; 
+	border: thin solid #DDD; color: #666;
+	font-family: Helvetica, Arial, sans-serif; font-weight: bold; font-size: 14px;
+}
+
+/* firefox alignment */
+@-moz-document url-prefix() { input[type="text"] { font-size:15px;} }
+
+input[type="textArea"] {
+	width: 200px; padding: 3px; 
+	border: thin solid #DDD; color: #666;
+	font-family: Helvetica, Arial, sans-serif; font-weight: bold; font-size: 14px;
+}
+
+#header { 	 
+	float:left; 
+	width:960px;
+	height:80px;
+	padding-top: 20px;
+}
+
+#content {
+	margin-top:10px;
+	width: 960px;
+	float:left;
+}
+
+#map { 
+	float:left; height:592px; width:50%; 
+	background: #FFFFFF; 
+}
+
+#geoForm {
+    float: left;
+    width: 50%;
+}
+
+#geoForm textarea {
+    font-family: monospace;
+}
