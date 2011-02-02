@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>Movity: GeoJSON Inspector</title>
+    <script type="text/javascript" src="http://github.com/simplegeo/polymaps/raw/v2.3.0/polymaps.js"></script>
+	<script type="text/javascript" src="http://github.com/protovis/protovis/raw/v3.3.1/examples/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="/static/js/map.js"></script>
+	<style type="text/css">
+
+		@import url("/static/css/main.css");
+		@import url("/static/css/mapstyle.css");
+		@import url("/static/css/colorbrewer.css");
+
+    </style>
+  </head>
+  <body>
+
+	<div id="header" class="uiBackground">
+		<div id="masthead">
+			<span id="logo" class="logoText">Movity</span>
+			<span class="productText">GeoJSON Inspector</span>
+			<br />
+			<span class="mediumText"></span>
+		</div>
+	</div>
+
+	<div id="content">
+		<div id="geoForm">
+			<textarea id="jsonInput" name="jsonInput" class="jsonInput" rows="45" cols="65" spellcheck="false" placeholder="GeoJSON goes here!"></textarea>
+
+    		<div class="validateButtons clear">
+    			<div class="left">
+        			<button name="submit" id="submit" value="Inspect" class="button left bold"> <!-- onClick="javascript: pageTracker._trackPageview('/mapped');"> -->Map It!</button>
+    			</div>
+    		</div>
+		</div>
+
+    	<div id="map"></div>
+
+        <span id="copy">
+          &copy; 2010
+          <a href="http://www.cloudmade.com/">CloudMade</a>,
+          <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors,
+          <a href="http://creativecommons.org/licenses/by-sa/2.0/">CCBYSA</a>.
+        </span>
+	</div>
+
+	<div id="hoverLabel"></div>
+
+
+  <script type="text/javascript">
+
+    {% if num %}
+        $.get('/{{num}}.json', function(data) {
+            $("#jsonInput").val(data);
+            json = JSON.parse(data);
+            displayMap(json);
+        });
+    {% endif %}
+
+	// map.js
+	createMap();
+
+   </script>
+
+  </body>
+</html>
