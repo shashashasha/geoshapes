@@ -6,11 +6,9 @@
 	<script type="text/javascript" src="http://github.com/protovis/protovis/raw/v3.3.1/examples/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="/static/js/map.js"></script>
 	<style type="text/css">
-
 		@import url("/static/css/main.css");
 		@import url("/static/css/mapstyle.css");
 		@import url("/static/css/colorbrewer.css");
-
     </style>
   </head>
   <body>
@@ -31,6 +29,10 @@
     		<div class="validateButtons clear">
     			<div class="left">
         			<button name="submit" id="submit" value="Inspect" class="button left bold"> <!-- onClick="javascript: pageTracker._trackPageview('/mapped');"> -->Map It!</button>
+            or
+              <form id='file_upload_form' method='POST' action="/file_upload/" enctype="multipart/form-data">
+                <input type="file" id="file_upload" name="file">
+              </form>
     			</div>
     		</div>
 		</div>
@@ -47,20 +49,23 @@
 
 	<div id="hoverLabel"></div>
 
-
   <script type="text/javascript">
+    $(document).ready(function() {
+      // map.js
+      createMap();
 
-    {% if num %}
-        $.get('/{{num}}.json', function(data) {
-            $("#jsonInput").val(data);
-            json = JSON.parse(data);
-            displayMap(json);
-        });
-    {% endif %}
+      {% if short_url %}
+          $.get('/{{short_url}}.json', function(data) {
+              $("#jsonInput").val(data);
+              json = JSON.parse(data);
+              displayMap(json);
+          });
+      {% endif %}
 
-	// map.js
-	createMap();
-
+      $('#file_upload').bind('change', function () {
+        $('#file_upload_form').submit();
+      });
+    });
    </script>
 
   </body>

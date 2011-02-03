@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request
-import redis
+from flask import Flask, render_template, redirect, request
+import redis, simplejson
 
 app = Flask(__name__)
 
@@ -20,8 +20,17 @@ def favicon():
 @app.route('/new_short_url/', methods=['POST'])
 def new_short_url():
     num = r.incr('max_short_url')
-    r.set(num, request.form['json'])
-    return baseN(num, 36)
+    url = baseN(num, 36)
+    r.set(url, request.form['json'])
+    return url
+
+@app.route('/file_upload/', methods=['POST'])
+def file_upload():
+    num = r.incr('max_short_url')
+    url = baseN(num, 36)
+    json = simplejson.dumps(simplejson.loads(request.files['file'].read()))
+    r.set(url, json)
+    return redirect(url)
 
 @app.route('/<num>.json')
 def num(num):
@@ -33,12 +42,7 @@ def num(num):
 @app.route('/')
 @app.route('/<short_url>')
 def index(short_url=None):
-    num = None
-
-    if short_url:
-        num = int(short_url, 36)
-
-    return render_template('index.html', num=num)
+    return render_template('index.html', short_url=short_url)
 
 def baseN(num, base, numerals="0123456789abcdefghijklmnopqrstuvwxyz"):
     if num == 0:
