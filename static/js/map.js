@@ -31,6 +31,8 @@ function createMap() {
 	map.add(po.compass()
 	    .pan("none"));
 
+    map.add(po.hash());
+    
 	map.container().setAttribute("class", "Blues");
 
 	$("#submit").click(function(e){
