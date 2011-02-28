@@ -15,9 +15,9 @@ function createMap() {
 
 	map = po.map()
 	    .container(svg)
-	    .center({lat: 37.78429973752749, lon: -122.41436719894409})
-		.zoom(13)
-	    .zoomRange([10, 16])
+	    .center({lat: 37.7594, lon:-122.4515})
+		.zoom(11)
+	    .zoomRange([2, 16])
 	    .add(po.interact());
 
     // gray dawn base layer
@@ -30,7 +30,7 @@ function createMap() {
 
 	map.add(po.compass()
 	    .pan("none"));
-
+    
     map.add(po.hash());
     
 	map.container().setAttribute("class", "Blues");
@@ -64,12 +64,18 @@ function createMap() {
 	    })
 	}
 
-
 	$(this).mousemove(onMouseMove);
 }
 
 function onMouseMove(e) {
-	$("#hoverLabel").css({left: e.pageX + 10, top:e.pageY + 10});
+    var hoverSelector = $("#hoverLabel");
+    var position = {left: e.pageX + 10, top: e.pageY + 10};
+    
+    if (position.left + hoverSelector.width() + 40 > document.width) {
+        position.left = e.pageX - hoverSelector.width() - 20;
+    }
+    
+    hoverSelector.css(position);    
 }
 
 function onShow(e) {
@@ -105,17 +111,11 @@ function displayMap(json) {
 
     geojson.reshow();
 
-    geojson.reshow();
-
-   recenter();
+    recenter();   
 }
 
 function recenter() {
    var features = geojson.features();
-   var center = { lat: 0, lon: 0 };
-   var totalLat = 0;
-   var totalLon = 0;
-   var totalCount = 0;
    console.log(features.length + " features loaded.");
 
    var extent = map.extent();
@@ -147,6 +147,10 @@ function recenter() {
    extent[1].lon += spread * .1;
 
    map.extent(extent);
+   
+   if (map.zoom() > 17) {
+       map.zoom(17);
+   }
 }
 
 function encloseExtent(extent, lat, lon) {
